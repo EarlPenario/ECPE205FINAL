@@ -51,6 +51,132 @@ public class Main {
                 frame.presentField.setText("");
                 frame.absentField.setText("");
 
+                double Gross_Pay = Integer.parseInt(present) * Integer.parseInt(salary);
+                double Net_Pay = Gross_Pay;
+                double Total_Deductions = 0;
+
+                /// SSS Contribution
+                double SSS_contribution = 0;
+                if(Gross_Pay > 34750){
+
+                    SSS_contribution = 1750;
+
+                }else if (Gross_Pay < 5250){
+
+                    SSS_contribution = 250;
+
+                }else {
+
+                    /// MPF Calculator
+                    int MPFCounter = 20250;
+                    int cutter = 2;
+                    int MPF = 0;
+
+                    if(Gross_Pay >= 20250){
+
+                        do{
+
+                            if(cutter == 2){
+                                MPF += 25;
+                                cutter = 0;
+                            }
+
+                            MPFCounter += 250;
+                            cutter++;
+
+                        }while(MPFCounter <= Gross_Pay);
+
+                    }
+                    /// Payment
+                    int PaymentCounter = 5250;
+                    int cutters = 2;
+                    int Payment = 250;
+
+                    if(Gross_Pay < 20250){
+
+                        if(Gross_Pay >= 5250){
+
+                            do{
+
+                                if(cutters == 2){
+                                    Payment += 25;
+                                    cutters = 0;
+                                }
+
+                                PaymentCounter += 250;
+                                cutters++;
+
+                            }while(PaymentCounter <= Gross_Pay);
+
+                        }
+
+                    }else{
+                        Payment = 1000;
+                    }
+
+                    SSS_contribution = MPF + Payment;
+                }
+                Net_Pay -= SSS_contribution;
+
+                /// PhilHealth Contribution
+                double PhilHealth_contribution = Gross_Pay * 0.05;
+
+                if(PhilHealth_contribution < 500){
+                    PhilHealth_contribution = 500;
+                    PhilHealth_contribution = PhilHealth_contribution / 2;
+                } else if(PhilHealth_contribution > 4500) {
+                    PhilHealth_contribution = 4500;
+                    PhilHealth_contribution = PhilHealth_contribution / 2;
+                }else {
+                    PhilHealth_contribution = PhilHealth_contribution / 2;
+                }
+
+                Net_Pay = Net_Pay - PhilHealth_contribution;
+
+                /// Pag-IBIG Contribution
+                double PagIBIG = 200;
+                Net_Pay -= 200;
+
+                /// Income Tax
+                double incomeTax = 0;
+                if(Gross_Pay < 20833){
+                    incomeTax = 0;
+                } else if (Gross_Pay >= 20833 && Gross_Pay <= 33332) {
+                    incomeTax = (Gross_Pay - 20833) * 0.15;
+                } else if (Gross_Pay >= 33333 && Gross_Pay <= 66666){
+                    incomeTax = 1875 + (Gross_Pay - 33333) * 0.2;
+                } else if (Gross_Pay >= 66667 && Gross_Pay <= 166666) {
+                    incomeTax = 8541.8 + (Gross_Pay - 66667) * 0.25;
+                } else if (Gross_Pay >= 166667 && Gross_Pay <= 666666) {
+                    incomeTax = 33541.8 + (Gross_Pay - 166667) * 0.3;
+                }else {
+                    incomeTax = 183541.8 + (Gross_Pay - 666667) * 0.35;
+                }
+
+                Net_Pay = Net_Pay - incomeTax;
+
+                Total_Deductions = SSS_contribution + PhilHealth_contribution + PagIBIG + incomeTax;
+
+                System.out.println();
+                System.out.println("Employee: ");
+                System.out.println("    " + fName + " " + lName);
+                System.out.println("Gross Salary: ");
+                System.out.println("    " + Gross_Pay);
+                System.out.println("SSS Contribution: ");
+                System.out.println("    "+ SSS_contribution);
+                System.out.println("Phil Health: ");
+                System.out.println("    " + PhilHealth_contribution);
+                System.out.println("Pag-IBIG: ");
+                System.out.println("    " + PagIBIG);
+                System.out.println("Total Contribution: ");
+                System.out.println("    " + (SSS_contribution + PhilHealth_contribution + PagIBIG));
+                System.out.println("Income Tax: ");
+                System.out.println("    " + incomeTax);
+                System.out.println("Total Deductions: ");
+                System.out.println("    " + Total_Deductions);
+                System.out.println("Net pay: ");
+                System.out.println("    " + (Net_Pay));
+
             }
         });
 
