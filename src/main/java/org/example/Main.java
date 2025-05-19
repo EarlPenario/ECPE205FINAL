@@ -53,6 +53,7 @@ public class Main {
 
                 double Gross_Pay = Integer.parseInt(present) * Integer.parseInt(salary);
                 double Net_Pay = Gross_Pay;
+                double Total_Deductions = 0;
 
                 /// SSS Contribution
                 double SSS_contribution = 0;
@@ -154,6 +155,8 @@ public class Main {
 
                 Net_Pay = Net_Pay - incomeTax;
 
+                Total_Deductions = SSS_contribution + PhilHealth_contribution + PagIBIG + incomeTax;
+
                 System.out.println();
                 System.out.println("Employee: ");
                 System.out.println("    " + fName + " " + lName);
@@ -170,7 +173,7 @@ public class Main {
                 System.out.println("Income Tax: ");
                 System.out.println("    " + incomeTax);
                 System.out.println("Total Deductions: ");
-                System.out.println("    " + (incomeTax + SSS_contribution + PhilHealth_contribution + PagIBIG));
+                System.out.println("    " + Total_Deductions);
                 System.out.println("Net pay: ");
                 System.out.println("    " + (Net_Pay));
 
