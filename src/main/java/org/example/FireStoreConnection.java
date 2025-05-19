@@ -21,7 +21,7 @@ public class FireStoreConnection {
     public FireStoreConnection() {
         db = null;
         try {
-            FileInputStream serviceAccount = new FileInputStream("src/main/java/org/example/ecpe205final-firebase-adminsdk-fbsvc-beaabe83c8.json");
+            FileInputStream serviceAccount = new FileInputStream("src/main/java/org/example/ecpe205final-firebase-adminsdk-fbsvc-0a09840c28.json");
             FirebaseOptions options = new FirebaseOptions.Builder().
                     setCredentials(GoogleCredentials.fromStream(serviceAccount)).
                     setDatabaseUrl("https://ecpe205final-default-rtdb.asia-southeast1.firebasedatabase.app/")
@@ -80,7 +80,7 @@ public class FireStoreConnection {
                 updates.put("SSS Contribution",employee.getSSS());
                 updates.put("Pag-IBIG",employee.getPagIBIG());
                 updates.put("Total Contribution",employee.getTotalContribution());
-                updates.put("Total Deduction",employee.getTotalDeduction());
+                updates.put("Total Deductions",employee.getTotalDeduction());
                 updates.put("Net Pay",employee.getNetPay());
                 updates.put("Income Tax",employee.getIncomeTax());
                 docRef.update(updates);
