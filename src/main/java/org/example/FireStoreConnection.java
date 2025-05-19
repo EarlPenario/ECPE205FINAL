@@ -9,6 +9,7 @@ import com.google.cloud.firestore.QuerySnapshot;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.cloud.FirestoreClient;
+import org.checkerframework.checker.units.qual.C;
 
 import java.io.FileInputStream;
 import java.util.*;
@@ -20,7 +21,7 @@ public class FireStoreConnection {
     public FireStoreConnection() {
         db = null;
         try {
-            FileInputStream serviceAccount = new FileInputStream("src/main/java/org/example/ecpe205final-firebase-adminsdk-fbsvc-733cb4f034.json");
+            FileInputStream serviceAccount = new FileInputStream("src/main/java/org/example/ecpe205final-firebase-adminsdk-fbsvc-beaabe83c8.json");
             FirebaseOptions options = new FirebaseOptions.Builder().
                     setCredentials(GoogleCredentials.fromStream(serviceAccount)).
                     setDatabaseUrl("https://ecpe205final-default-rtdb.asia-southeast1.firebasedatabase.app/")
@@ -33,7 +34,9 @@ public class FireStoreConnection {
     }
 
     public void addEmployee(String lname, String fName, String position, String salary,
-                            String present, String absent) {
+                            String present, String absent, Double grossPay,
+                            Double SSS, Double PagIBIG, Double PhilHealth, Double Contribution,
+                            Double IncomeTax,Double Deductions, Double NetPay) {
         Map<String, Object> employee = new HashMap<>();
         employee.put("Last Name", lname);
         employee.put("First Name", fName);
@@ -41,6 +44,14 @@ public class FireStoreConnection {
         employee.put("Daily Salary", salary);
         employee.put("Present Days", present);
         employee.put("Absent Days", absent);
+        employee.put("Gross Pay", grossPay);
+        employee.put("SSS Contribution",SSS);
+        employee.put("Pag-Ibig", PagIBIG);
+        employee.put("PhilHealth",PhilHealth);
+        employee.put("Total Contribution", Contribution);
+        employee.put("Income Tax",IncomeTax);
+        employee.put("Total Deductions",Deductions);
+        employee.put("Net Pay",NetPay);
 
         ApiFuture<DocumentReference> result = db.collection("employees").add(employee);
 
@@ -65,6 +76,13 @@ public class FireStoreConnection {
                 updates.put("Daily Salary",employee.getSalary());
                 updates.put("Present Days",employee.getPresent());
                 updates.put("Absent Days",employee.getAbsent());
+                updates.put("Gross Pay",employee.getGrossPay());
+                updates.put("SSS Contribution",employee.getSSS());
+                updates.put("Pag-IBIG",employee.getPagIBIG());
+                updates.put("Total Contribution",employee.getTotalContribution());
+                updates.put("Total Deduction",employee.getTotalDeduction());
+                updates.put("Net Pay",employee.getNetPay());
+                updates.put("Income Tax",employee.getIncomeTax());
                 docRef.update(updates);
             }
         } catch (Exception e) {

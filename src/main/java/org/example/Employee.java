@@ -2,6 +2,7 @@ package org.example;
 
 public class Employee {
     String fName,Position,Salary,lName,present, absent;
+    Double SSS,PagIBIG,GrossPay,NetPay,IncomeTax,TotalContribution,TotalDeduction,PhilHealth;
 
 
     public String getPosition() {
@@ -49,6 +50,70 @@ public class Employee {
 
     public void setPresent(String present) {
         this.present = present;
+    }
+
+    public Double getTotalDeduction() {
+        return TotalDeduction;
+    }
+
+    public void setTotalDeduction(Double totalDeduction) {
+        TotalDeduction = totalDeduction;
+    }
+
+    public Double getTotalContribution() {
+        return TotalContribution;
+    }
+
+    public void setTotalContribution(Double totalContribution) {
+        TotalContribution = totalContribution;
+    }
+
+    public Double getIncomeTax() {
+        return IncomeTax;
+    }
+
+    public void setIncomeTax(Double incomeTax) {
+        IncomeTax = incomeTax;
+    }
+
+    public Double getNetPay() {
+        return NetPay;
+    }
+
+    public void setNetPay(Double netPay) {
+        NetPay = netPay;
+    }
+
+    public Double getGrossPay() {
+        return GrossPay;
+    }
+
+    public void setGrossPay(Double grossPay) {
+        GrossPay = grossPay;
+    }
+
+    public Double getPagIBIG() {
+        return PagIBIG;
+    }
+
+    public void setPagIBIG(Double pagIBIG) {
+        PagIBIG = pagIBIG;
+    }
+
+    public Double getSSS() {
+        return SSS;
+    }
+
+    public void setSSS(Double SSS) {
+        this.SSS = SSS;
+    }
+
+    public Double getPhilHealth() {
+        return PhilHealth;
+    }
+
+    public void setPhilHealth(Double philHealth) {
+        PhilHealth = philHealth;
     }
 
     public Employee(String lName, String fName, String position, String salary, String present, String absent) {
