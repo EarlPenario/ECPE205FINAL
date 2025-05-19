@@ -160,7 +160,7 @@ public class Main {
                 Total_Deductions = SSS_contribution + PhilHealth_contribution + PagIBIG + incomeTax;
 
                 fireStoreConnection.addEmployee(lName,fName,position,salary,present,absent,Gross_Pay,
-                        SSS_contribution,PhilHealth_contribution,PagIBIG,
+                        SSS_contribution,PagIBIG, PhilHealth_contribution,
                         Total_Contribution,incomeTax,Total_Deductions,Net_Pay);
 
             }
