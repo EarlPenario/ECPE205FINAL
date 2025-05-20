@@ -126,7 +126,7 @@ public class Frame extends JFrame {
         constraints.gridwidth=1;
         constraints.gridheight=1;
         constraints.weightx=2;
-        constraints.fill=GridBagConstraints.WEST;
+        constraints.fill=GridBagConstraints.BOTH;
         container.add(absentField,constraints);
 
         constraints.gridx=0;
