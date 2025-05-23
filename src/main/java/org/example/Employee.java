@@ -1,7 +1,7 @@
 package org.example;
 
 public class Employee {
-    String fName,Position,Salary,lName,present, absent;
+    String fName,Position,Salary,lName,present, absent , dateJoined;
     Double SSS,PagIBIG,GrossPay,NetPay,IncomeTax,TotalContribution,TotalDeduction,PhilHealth;
 
 
@@ -116,6 +116,14 @@ public class Employee {
         PhilHealth = philHealth;
     }
 
+    public String getDateJoined() {
+        return dateJoined;
+    }
+
+    public void setDateJoined(String dateJoined) {
+        this.dateJoined = dateJoined;
+    }
+
     public Employee(String lName, String fName, String position, String salary, String present, String absent) {
         this.fName = fName;
         this.Position = position;
@@ -123,5 +131,23 @@ public class Employee {
         this.lName = lName;
         this.present = present;
         this.absent = absent;
+    }
+
+    public Employee(Double grossPay, String fName, String position, String salary, String lName, String present, String absent, String dateJoined, Double SSS, Double pagIBIG, Double netPay, Double incomeTax, Double totalContribution, Double totalDeduction, Double philHealth) {
+        GrossPay = grossPay;
+        this.fName = fName;
+        Position = position;
+        Salary = salary;
+        this.lName = lName;
+        this.present = present;
+        this.absent = absent;
+        this.dateJoined = dateJoined;
+        this.SSS = SSS;
+        PagIBIG = pagIBIG;
+        NetPay = netPay;
+        IncomeTax = incomeTax;
+        TotalContribution = totalContribution;
+        TotalDeduction = totalDeduction;
+        PhilHealth = philHealth;
     }
 }
