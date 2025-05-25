@@ -372,6 +372,54 @@ public class Main {
         frame.yearEndReport.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                ArrayList<Employee> employee = fireStoreConnection.getAllEmployees();
+                ArrayList<Employee> YrEndEmployee = new ArrayList<>();
+                LocalDate currentDate = LocalDate.now();
+                DateTimeFormatter dateformatter = DateTimeFormatter.ofPattern("dd-MMM-yyyy");
+                String dateFormatted = currentDate.format(dateformatter);
+                System.out.println("Date issued: " + dateFormatted);
+                System.out.println();
+
+                for(int i = 0; i < employee.size(); i++){
+                    double SSS , Phil_Health , Pag_IBIG , TotalContribution , TotalIncomeTax , GrossPay , NetPay , TotalDeduction = 0;
+                    Employee employeee = employee.get(i);
+                    SSS = employeee.getSSS() * 12;
+                    Phil_Health = employeee.getPhilHealth() * 12;
+                    Pag_IBIG = employeee.getPagIBIG() * 12;
+                    TotalContribution = employeee.getTotalContribution() * 12;
+                    TotalIncomeTax = employeee.getIncomeTax() * 12;
+                    GrossPay = employeee.getGrossPay() * 12;
+                    NetPay = employeee.getNetPay() * 12;
+                    TotalDeduction = employeee.getTotalDeduction() * 12;
+
+                    System.out.println("Name: " + employeee.getFName() + " " + employeee.getLName());
+                    System.out.println("Daily Salary: " + employeee.getSalary());
+                    System.out.println("Year-End Gross Pay: " + GrossPay);
+                    System.out.println("Year-End Net Pay: " + NetPay);
+                    System.out.println("Year-End Contribution: " + TotalContribution);
+                    System.out.println("Year-End Income Tax: " + TotalIncomeTax);
+                    System.out.println("Year-End Total Deduction: " + TotalDeduction);
+                    System.out.println();
+                    YrEndEmployee.add(new Employee(GrossPay , employeee.getFName(), employeee.getPosition(), employeee.getSalary(),
+                            employeee.getLName(), employeee.getPresent(), employeee.getAbsent(), employeee.getDateJoined(), SSS,
+                            Pag_IBIG, NetPay, TotalIncomeTax, TotalContribution,
+                            TotalDeduction, Phil_Health));
+                }
+
+                System.out.println();
+
+                for(int i = 0 ; i < YrEndEmployee.size(); i++){
+                    System.out.println();
+                    System.out.println("Name: " + YrEndEmployee.get(i).getFName() + " " + YrEndEmployee.get(i).getLName());
+                    System.out.println("Daily Salary: " + YrEndEmployee.get(i).getSalary());
+                    System.out.println("Year-End Gross Pay: " + YrEndEmployee.get(i).getGrossPay());
+                    System.out.println("Year-End Net Pay: " + YrEndEmployee.get(i).getNetPay());
+                    System.out.println("Year-End Contribution: " + YrEndEmployee.get(i).getTotalContribution());
+                    System.out.println("Year-End Income Tax: " + YrEndEmployee.get(i).getIncomeTax());
+                    System.out.println("Year-End Total Deduction: " + YrEndEmployee.get(i).getTotalDeduction());
+                    System.out.println();
+
+                }
 
             }
         });
