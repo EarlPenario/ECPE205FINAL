@@ -21,7 +21,7 @@ public class FireStoreConnection {
     public FireStoreConnection() {
         db = null;
         try {
-            FileInputStream serviceAccount = new FileInputStream("src/main/java/org/example/ecpe205final-firebase-adminsdk-fbsvc-7aaef61d50.json");
+            FileInputStream serviceAccount = new FileInputStream("src/main/java/org/example/ecpe205final-firebase-adminsdk-fbsvc-1235b48426.json");
             FirebaseOptions options = new FirebaseOptions.Builder().
                     setCredentials(GoogleCredentials.fromStream(serviceAccount)).
                     setDatabaseUrl("https://ecpe205final-default-rtdb.asia-southeast1.firebasedatabase.app/")
@@ -36,7 +36,7 @@ public class FireStoreConnection {
     public void addEmployee(String lname, String fName, String position, String salary,
                             String present, String absent, Double grossPay,
                             Double SSS, Double PagIBIG, Double PhilHealth, Double Contribution,
-                            Double IncomeTax,Double Deductions, Double NetPay) {
+                            Double IncomeTax,Double Deductions, Double NetPay , String dateJoined) {
         Map<String, Object> employee = new HashMap<>();
         employee.put("Last Name", lname);
         employee.put("First Name", fName);
@@ -52,6 +52,7 @@ public class FireStoreConnection {
         employee.put("Income Tax",IncomeTax);
         employee.put("Total Deductions",Deductions);
         employee.put("Net Pay",NetPay);
+        employee.put("Date Joined" , dateJoined);
 
         ApiFuture<DocumentReference> result = db.collection("employees").add(employee);
 
@@ -130,7 +131,16 @@ public class FireStoreConnection {
                 String salary=document.getString("Daily Salary");
                 String present=document.getString("Present Days");
                 String absent=document.getString("Absent Days");
-                employees.add(new Employee(lName,fName,position,salary,present,absent));
+                String dateJoined = document.getString("Date Joined");
+                double SSS = document.getDouble("SSS Contribution");
+                double PagIBIG = document.getDouble("Pag-Ibig");
+                double GrossPay = document.getDouble("Gross Pay");
+                double NetPay = document.getDouble("Net Pay");
+                double IncomeTax = document.getDouble("Income Tax");
+                double TotalContribution = document.getDouble("Total Contribution");
+                double TotalDeduction = document.getDouble("Total Deductions");
+                double PhilHealth = document.getDouble("PhilHealth");
+                employees.add(new Employee(GrossPay , fName , position , salary , lName , present , absent , dateJoined , SSS , PagIBIG , NetPay , IncomeTax , TotalContribution , TotalDeduction , PhilHealth));
             }
             return employees;
         } catch (Exception e) {
