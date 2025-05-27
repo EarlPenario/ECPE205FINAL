@@ -21,7 +21,7 @@ public class FireStoreConnection {
     public FireStoreConnection() {
         db = null;
         try {
-            FileInputStream serviceAccount = new FileInputStream("src/main/java/org/example/ecpe205final-firebase-adminsdk-fbsvc-4fb570d670.json");
+            FileInputStream serviceAccount = new FileInputStream("src/main/java/org/example/ecpe205final-firebase-adminsdk-fbsvc-2e06f547cb.json");
             FirebaseOptions options = new FirebaseOptions.Builder().
                     setCredentials(GoogleCredentials.fromStream(serviceAccount)).
                     setDatabaseUrl("https://ecpe205final-default-rtdb.asia-southeast1.firebasedatabase.app/")
@@ -118,6 +118,40 @@ public class FireStoreConnection {
             e.printStackTrace();
         }
         return false;
+    }
+
+    public Employee getEmployee(String fName, String lName) {
+        try {
+            ApiFuture<QuerySnapshot> query = db.collection("employees")
+                    .whereEqualTo("First Name", fName)
+                    .whereEqualTo("Last Name", lName)
+                    .get();
+
+            List<QueryDocumentSnapshot> documents = query.get().getDocuments();
+            if (!documents.isEmpty()) {
+                QueryDocumentSnapshot doc = documents.get(0);
+                return new Employee(
+                        doc.getDouble("Gross Pay"),
+                        doc.getString("First Name"),
+                        doc.getString("Position"),
+                        doc.getString("Daily Salary"),
+                        doc.getString("Last Name"),
+                        doc.getString("Present Days"),
+                        doc.getString("Absent Days"),
+                        doc.getString("Date Joined"),
+                        doc.getDouble("SSS Contribution"),
+                        doc.getDouble("Pag-Ibig"),
+                        doc.getDouble("Net Pay"),
+                        doc.getDouble("Income Tax"),
+                        doc.getDouble("Total Contribution"),
+                        doc.getDouble("Total Deductions"),
+                        doc.getDouble("PhilHealth")
+                );
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public ArrayList<Employee> getAllEmployees() {

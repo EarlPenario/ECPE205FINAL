@@ -381,6 +381,11 @@ public class Main {
                 int index = frame.employeeTable.getSelectedRow();
                 if(index>=0) {
                     Employee employee = frame.table.employees.get(index);
+
+                    if (employee.getGrossPay() == null) {
+                        employee = fireStoreConnection.getEmployee(employee.getFName(), employee.getLName());
+                    }
+
                     LocalDate currentDate = LocalDate.now();
                     DateTimeFormatter dateformatter = DateTimeFormatter.ofPattern("dd-MMM-yyyy");
                     String dateFormatted = currentDate.format(dateformatter);
@@ -399,8 +404,6 @@ public class Main {
                 LocalDate currentDate = LocalDate.now();
                 DateTimeFormatter dateformatter = DateTimeFormatter.ofPattern("dd-MMM-yyyy");
                 String dateFormatted = currentDate.format(dateformatter);
-                System.out.println("Date issued: " + dateFormatted);
-                System.out.println();
 
                 for(int i = 0; i < employee.size(); i++){
                     double SSS , Phil_Health , Pag_IBIG , TotalContribution , TotalIncomeTax , GrossPay , NetPay , TotalDeduction = 0;
