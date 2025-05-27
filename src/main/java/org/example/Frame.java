@@ -5,8 +5,8 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class Frame extends JFrame {
-    JLabel lName,fName,position,salary,present, absent;
-    JTextField lField, fField, positionField, salaryField,presentField, absentField;
+    JLabel lName,fName,position,salary,present, absent,date;
+    JTextField lField, fField, positionField, salaryField,presentField, absentField,dateField;
     JTable employeeTable;
     Table table;
     JButton add, update, delete,payslip,yearEndReport;
@@ -22,6 +22,7 @@ public class Frame extends JFrame {
         salary=new JLabel("Daily Salary");
         present=new JLabel("Present Days");
         absent=new JLabel("Absent Days");
+        date=new JLabel("Date Joined");
 
         lField=new JTextField(10);
         fField=new JTextField(10);
@@ -29,6 +30,7 @@ public class Frame extends JFrame {
         salaryField=new JTextField(10);
         presentField=new JTextField(10);
         absentField=new JTextField(10);
+        dateField=new JTextField(10);
 
         table=new Table();
         employeeTable=new JTable(table);
@@ -43,6 +45,7 @@ public class Frame extends JFrame {
         layout=new GridBagLayout();
         container.setLayout(layout);
         constraints=new GridBagConstraints();
+        constraints.insets=new Insets(5,5,5,5);
 
         constraints.gridx=0;
         constraints.gridy=0;
@@ -99,6 +102,22 @@ public class Frame extends JFrame {
         constraints.fill=GridBagConstraints.BOTH;
         container.add(salaryField,constraints);
 
+        constraints.gridx=2;
+        constraints.gridy=2;
+        constraints.gridwidth=1;
+        constraints.gridheight=1;
+        constraints.weightx=2;
+        constraints.fill=GridBagConstraints.BOTH;
+        container.add(date,constraints);
+
+        constraints.gridx=3;
+        constraints.gridy=2;
+        constraints.gridwidth=1;
+        constraints.gridheight=1;
+        constraints.weightx=2;
+        constraints.fill=GridBagConstraints.BOTH;
+        container.add(dateField,constraints);
+
         constraints.gridx=4;
         constraints.gridy=0;
         constraints.gridwidth=1;
@@ -130,48 +149,48 @@ public class Frame extends JFrame {
         container.add(absentField,constraints);
 
         constraints.gridx=0;
-        constraints.gridy=3;
+        constraints.gridy=4;
         constraints.gridwidth=1;
         constraints.gridheight=1;
         constraints.fill=GridBagConstraints.BOTH;
         container.add(add,constraints);
 
         constraints.gridx=1;
-        constraints.gridy=3;
+        constraints.gridy=4;
         constraints.gridwidth=1;
         constraints.gridheight=1;
         constraints.fill=GridBagConstraints.BOTH;
         container.add(delete,constraints);
 
         constraints.gridx=2;
-        constraints.gridy=3;
+        constraints.gridy=4;
         constraints.gridwidth=1;
         constraints.gridheight=1;
         constraints.fill=GridBagConstraints.BOTH;
         container.add(update,constraints);
 
         constraints.gridx=3;
-        constraints.gridy=3;
+        constraints.gridy=4;
         constraints.gridwidth=1;
         constraints.gridheight=1;
         constraints.fill=GridBagConstraints.BOTH;
         container.add(payslip,constraints);
 
         constraints.gridx=4;
-        constraints.gridy=3;
+        constraints.gridy=4;
         constraints.gridwidth=1;
         constraints.gridheight=1;
         constraints.fill=GridBagConstraints.BOTH;
         container.add(yearEndReport,constraints);
 
-
         constraints.gridx=0;
-        constraints.gridy=2;
+        constraints.gridy=3;
         constraints.gridwidth=6;
         constraints.gridheight=1;
         constraints.fill=GridBagConstraints.BOTH;
         container.add(new JScrollPane(employeeTable),constraints);
 
+        this.setTitle("Payroll System");
         this.setVisible(true);
         this.pack();
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);

@@ -31,6 +31,16 @@ public class Main {
                 String salary=frame.salaryField.getText();
                 String present=frame.presentField.getText();
                 String absent=frame.absentField.getText();
+                String dateJoined=frame.dateField.getText();
+
+                try {
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MMM-yyyy");
+                    LocalDate.parse(dateJoined, formatter);
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(null, "Invalid date format! Please use dd-MMM-yyyy " +
+                            "(Example: 01-Jan-2023)");
+                    return;
+                }
 
                 if (fireStoreConnection.employeeExists(lName, fName)) {
                     JOptionPane.showMessageDialog(null, "This employee already exists!");
@@ -38,12 +48,12 @@ public class Main {
                 }
 
                 if (lName.isEmpty() || fName.isEmpty() || position.isEmpty() ||
-                        salary.isEmpty() || present.isEmpty() || absent.isEmpty()) {
+                        salary.isEmpty() || present.isEmpty() || absent.isEmpty()|| dateJoined.isEmpty()) {
                     JOptionPane.showMessageDialog(null, "Please fill in all fields!");
                     return;
                 }
 
-                Employee employee=new Employee(lName,fName,position,salary,present,absent);
+                Employee employee=new Employee(lName,fName,position,salary,present,absent,dateJoined);
                 frame.table.addEmployee(employee);
 
                 frame.lField.setText("");
@@ -52,6 +62,7 @@ public class Main {
                 frame.salaryField.setText("");
                 frame.presentField.setText("");
                 frame.absentField.setText("");
+                frame.dateField.setText("");
 
                 double Gross_Pay = Integer.parseInt(present) * Integer.parseInt(salary);
                 double Net_Pay = Gross_Pay;
@@ -162,13 +173,9 @@ public class Main {
 
                 Total_Deductions = SSS_contribution + PhilHealth_contribution + PagIBIG + incomeTax;
 
-                LocalDate currentDate = LocalDate.now();
-                DateTimeFormatter dateformatter = DateTimeFormatter.ofPattern("dd-MMM-yyyy");
-                String dateFormatted = currentDate.format(dateformatter);
-
                 fireStoreConnection.addEmployee(lName,fName,position,salary,present,absent,Gross_Pay,
                         SSS_contribution,PagIBIG, PhilHealth_contribution,
-                        Total_Contribution,incomeTax,Total_Deductions,Net_Pay , dateFormatted);
+                        Total_Contribution,incomeTax,Total_Deductions,Net_Pay , dateJoined);
 
             }
         });
@@ -185,9 +192,19 @@ public class Main {
                     String salary=frame.salaryField.getText();
                     String present=frame.presentField.getText();
                     String absent=frame.absentField.getText();
+                    String date=frame.dateField.getText();
+
+                    try {
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MMM-yyyy");
+                        LocalDate.parse(date, formatter);
+                    } catch (Exception ex) {
+                        JOptionPane.showMessageDialog(null, "Invalid date format! Please use dd-MMM-yyyy " +
+                                "(Example: 01-Jan-2023)");
+                        return;
+                    }
 
                     if (lName.isEmpty() || fName.isEmpty() || position.isEmpty() ||
-                            salary.isEmpty() || present.isEmpty() || absent.isEmpty()) {
+                            salary.isEmpty() || present.isEmpty() || absent.isEmpty()|| date.isEmpty()) {
                         JOptionPane.showMessageDialog(null, "Please fill in all fields!");
                         return;
                     }
@@ -205,6 +222,7 @@ public class Main {
                     employee.setSalary(salary);
                     employee.setPresent(present);
                     employee.setAbsent(absent);
+                    employee.setDateJoined(date);
                     frame.table.employees.set(selectedRow,employee);
                     frame.table.fireTableDataChanged();
                     fireStoreConnection.updateEmployee(employee,selectedRow);
@@ -215,6 +233,7 @@ public class Main {
                     frame.salaryField.setText("");
                     frame.presentField.setText("");
                     frame.absentField.setText("");
+                    frame.dateField.setText("");
 
                     double Gross_Pay = Integer.parseInt(present) * Integer.parseInt(salary);
                     double Net_Pay = Gross_Pay;
@@ -360,12 +379,15 @@ public class Main {
             public void actionPerformed(ActionEvent e) {
 
                 int index = frame.employeeTable.getSelectedRow();
-                Employee employee = frame.table.employees.get(index);
-                LocalDate currentDate = LocalDate.now();
-                DateTimeFormatter dateformatter = DateTimeFormatter.ofPattern("dd-MMM-yyyy");
-                String dateFormatted = currentDate.format(dateformatter);
-                PayslipGUI frame = new PayslipGUI(employee , dateFormatted);
-
+                if(index>=0) {
+                    Employee employee = frame.table.employees.get(index);
+                    LocalDate currentDate = LocalDate.now();
+                    DateTimeFormatter dateformatter = DateTimeFormatter.ofPattern("dd-MMM-yyyy");
+                    String dateFormatted = currentDate.format(dateformatter);
+                    PayslipGUI frame = new PayslipGUI(employee, dateFormatted);
+                }else {
+                    JOptionPane.showMessageDialog(null,"Please select an employee you want to generate a payslip for!");
+                }
             }
         });
 
@@ -382,6 +404,8 @@ public class Main {
 
                 for(int i = 0; i < employee.size(); i++){
                     double SSS , Phil_Health , Pag_IBIG , TotalContribution , TotalIncomeTax , GrossPay , NetPay , TotalDeduction = 0;
+                    int totalPresent;
+                    String present,stringTotal;
                     Employee employeee = employee.get(i);
                     SSS = employeee.getSSS() * 12;
                     Phil_Health = employeee.getPhilHealth() * 12;
@@ -391,35 +415,15 @@ public class Main {
                     GrossPay = employeee.getGrossPay() * 12;
                     NetPay = employeee.getNetPay() * 12;
                     TotalDeduction = employeee.getTotalDeduction() * 12;
-
-                    System.out.println("Name: " + employeee.getFName() + " " + employeee.getLName());
-                    System.out.println("Daily Salary: " + employeee.getSalary());
-                    System.out.println("Year-End Gross Pay: " + GrossPay);
-                    System.out.println("Year-End Net Pay: " + NetPay);
-                    System.out.println("Year-End Contribution: " + TotalContribution);
-                    System.out.println("Year-End Income Tax: " + TotalIncomeTax);
-                    System.out.println("Year-End Total Deduction: " + TotalDeduction);
-                    System.out.println();
+                    present=employeee.getPresent();
+                    totalPresent=Integer.parseInt(present)*12;
+                    stringTotal=String.valueOf(totalPresent);
                     YrEndEmployee.add(new Employee(GrossPay , employeee.getFName(), employeee.getPosition(), employeee.getSalary(),
-                            employeee.getLName(), employeee.getPresent(), employeee.getAbsent(), employeee.getDateJoined(), SSS,
+                            employeee.getLName(), stringTotal, employeee.getAbsent(), employeee.getDateJoined(), SSS,
                             Pag_IBIG, NetPay, TotalIncomeTax, TotalContribution,
                             TotalDeduction, Phil_Health));
                 }
-
-                System.out.println();
-
-                for(int i = 0 ; i < YrEndEmployee.size(); i++){
-                    System.out.println();
-                    System.out.println("Name: " + YrEndEmployee.get(i).getFName() + " " + YrEndEmployee.get(i).getLName());
-                    System.out.println("Daily Salary: " + YrEndEmployee.get(i).getSalary());
-                    System.out.println("Year-End Gross Pay: " + YrEndEmployee.get(i).getGrossPay());
-                    System.out.println("Year-End Net Pay: " + YrEndEmployee.get(i).getNetPay());
-                    System.out.println("Year-End Contribution: " + YrEndEmployee.get(i).getTotalContribution());
-                    System.out.println("Year-End Income Tax: " + YrEndEmployee.get(i).getIncomeTax());
-                    System.out.println("Year-End Total Deduction: " + YrEndEmployee.get(i).getTotalDeduction());
-                    System.out.println();
-
-                }
+                new YearEndGUI(YrEndEmployee, dateFormatted);
 
             }
         });

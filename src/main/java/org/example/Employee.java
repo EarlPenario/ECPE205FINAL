@@ -124,13 +124,14 @@ public class Employee {
         this.dateJoined = dateJoined;
     }
 
-    public Employee(String lName, String fName, String position, String salary, String present, String absent) {
+    public Employee(String lName, String fName, String position, String salary, String present, String absent,String dateJoined) {
         this.fName = fName;
         this.Position = position;
         this.Salary = salary;
         this.lName = lName;
         this.present = present;
         this.absent = absent;
+        this.dateJoined=dateJoined;
     }
 
     public Employee(Double grossPay, String fName, String position, String salary, String lName, String present, String absent, String dateJoined, Double SSS, Double pagIBIG, Double netPay, Double incomeTax, Double totalContribution, Double totalDeduction, Double philHealth) {

@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class PayslipGUI extends JFrame {
-    JLabel name , dateJoined , line , PresentDays , dateIssued , Position , DailySalary , Employee , Employer , LineE , LineER;
+    JLabel name , dateJoined , PresentDays , dateIssued , Position , DailySalary , Employee , Employer , LineE , LineER;
     GridBagLayout layout;
     JTextArea Pay , Deductions;
 
@@ -12,7 +12,6 @@ public class PayslipGUI extends JFrame {
         Container container = this.getContentPane();
         name = new JLabel("Name: " + employee.getFName() + " " + employee.getLName() + " ");
         dateJoined = new JLabel("Date Joined: " + employee.getDateJoined());
-        line = new JLabel(" | ");
         PresentDays = new JLabel("Present Days: " + employee.getPresent());
         dateIssued = new JLabel("Date Issued: " + date);
         Position = new JLabel("Position: " + employee.getPosition());
@@ -23,19 +22,23 @@ public class PayslipGUI extends JFrame {
         LineER = new JLabel("___________________");
 
 
-        Pay = new JTextArea(10 , 10);
+        Pay = new JTextArea(5 , 20);
         Pay.setEditable(false);
-        Deductions = new JTextArea(10 , 10);
+        Deductions = new JTextArea(5 , 20);
         Deductions.setEditable(false);
 
-        String one = "Gross Pay: " + employee.getGrossPay() + "\n" +
-                "Net Pay: " + employee.getNetPay();
-        String two = "SSS: " + employee.getSSS() + "\n" +
-                "Phil Health: " + employee.getPhilHealth() + "\n" +
-                "Pag-IBIG: " + employee.getPagIBIG() + "\n" +
-                "Total Contribution: " + employee.getTotalContribution() + "\n" +
-                "Income Tax: " + employee.getIncomeTax() + "\n" +
-                "Total Deduction: " + employee.getTotalDeduction();
+        String one = String.format("Gross Pay: %.2f\nNet Pay: %.2f",
+                employee.getGrossPay(),
+                employee.getNetPay());
+        String two = String.format("SSS: %.2f\nPhil Health: %.2f\nPag-IBIG: %.2f\n" +
+                        "Total Contribution: %.2f\nIncome Tax: %.2f\n" +
+                        "Total Deduction: %.2f",
+                employee.getSSS(),
+                employee.getPhilHealth(),
+                employee.getPagIBIG(),
+                employee.getTotalContribution(),
+                employee.getIncomeTax(),
+                employee.getTotalDeduction());
 
         Pay.append(one);
         Deductions.append(two);
@@ -43,6 +46,7 @@ public class PayslipGUI extends JFrame {
         layout = new GridBagLayout();
         container.setLayout(layout);
         GridBagConstraints constraints = new GridBagConstraints();
+        constraints.insets=new Insets(5,5,5,5);
 
         constraints.gridx=0;
         constraints.gridy=0;
@@ -50,13 +54,6 @@ public class PayslipGUI extends JFrame {
         constraints.gridheight=1;
         constraints.fill=GridBagConstraints.BOTH;
         container.add(name,constraints);
-
-        constraints.gridx=1;
-        constraints.gridy=0;
-        constraints.gridwidth=1;
-        constraints.gridheight=1;
-        constraints.fill=GridBagConstraints.BOTH;
-        container.add(line,constraints);
 
         constraints.gridx=2;
         constraints.gridy=0;
@@ -72,13 +69,6 @@ public class PayslipGUI extends JFrame {
         constraints.fill=GridBagConstraints.BOTH;
         container.add(dateJoined,constraints);
 
-        constraints.gridx=1;
-        constraints.gridy=0;
-        constraints.gridwidth=1;
-        constraints.gridheight=1;
-        constraints.fill=GridBagConstraints.BOTH;
-        container.add(line,constraints);
-
         constraints.gridx=2;
         constraints.gridy=1;
         constraints.gridwidth=1;
@@ -92,13 +82,6 @@ public class PayslipGUI extends JFrame {
         constraints.gridheight=1;
         constraints.fill=GridBagConstraints.BOTH;
         container.add(dateIssued,constraints);
-
-        constraints.gridx=1;
-        constraints.gridy=0;
-        constraints.gridwidth=1;
-        constraints.gridheight=1;
-        constraints.fill=GridBagConstraints.BOTH;
-        container.add(line,constraints);
 
         constraints.gridx=2;
         constraints.gridy=2;
@@ -149,9 +132,10 @@ public class PayslipGUI extends JFrame {
         constraints.fill=GridBagConstraints.BOTH;
         container.add(LineER,constraints);
 
+        this.setTitle("Monthly Payslip");
         this.setVisible(true);
         this.pack();
-        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
     }
 }

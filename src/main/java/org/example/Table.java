@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class Table extends AbstractTableModel {
     ArrayList<Employee>employees;
-    String [] columns={"Last Name","First Name","Position","Daily Salary","Days Present", "Days Absent"};
+    String [] columns={"Last Name","First Name","Position","Daily Salary","Days Present", "Days Absent","Date Joined"};
     public Table(){
         employees=new ArrayList<>();
     }
@@ -44,8 +44,12 @@ public class Table extends AbstractTableModel {
             return employee.Salary;
         } else if (columnIndex==4) {
             return employee.present;
-        } else {
+        } else if (columnIndex==5){
             return employee.absent;
+        }else {
+            return employee.dateJoined;
         }
+
+
     }
 }

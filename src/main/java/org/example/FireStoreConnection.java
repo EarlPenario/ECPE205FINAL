@@ -21,7 +21,7 @@ public class FireStoreConnection {
     public FireStoreConnection() {
         db = null;
         try {
-            FileInputStream serviceAccount = new FileInputStream("src/main/java/org/example/ecpe205final-firebase-adminsdk-fbsvc-1235b48426.json");
+            FileInputStream serviceAccount = new FileInputStream("src/main/java/org/example/ecpe205final-firebase-adminsdk-fbsvc-4fb570d670.json");
             FirebaseOptions options = new FirebaseOptions.Builder().
                     setCredentials(GoogleCredentials.fromStream(serviceAccount)).
                     setDatabaseUrl("https://ecpe205final-default-rtdb.asia-southeast1.firebasedatabase.app/")
@@ -85,6 +85,7 @@ public class FireStoreConnection {
                 updates.put("Total Deductions",employee.getTotalDeduction());
                 updates.put("Net Pay",employee.getNetPay());
                 updates.put("Income Tax",employee.getIncomeTax());
+                updates.put("Date Joined",employee.getDateJoined());
                 docRef.update(updates);
             }
         } catch (Exception e) {
