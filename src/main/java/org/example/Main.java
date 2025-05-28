@@ -33,7 +33,14 @@ public class Main {
                 String absent=frame.absentField.getText();
                 String dateJoined=frame.dateField.getText();
 
-
+                try {
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MMM-yyyy");
+                    LocalDate.parse(dateJoined, formatter);
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(null, "Invalid date format! Please use dd-MMM-yyyy " +
+                            "(Example: 01-Jan-2023)");
+                    return;
+                }
 
                 if (fireStoreConnection.employeeExists(lName, fName)) {
                     JOptionPane.showMessageDialog(null, "This employee already exists!");
@@ -43,14 +50,6 @@ public class Main {
                 if (lName.isEmpty() || fName.isEmpty() || position.isEmpty() ||
                         salary.isEmpty() || present.isEmpty() || absent.isEmpty()|| dateJoined.isEmpty()) {
                     JOptionPane.showMessageDialog(null, "Please fill in all fields!");
-                    return;
-                }
-                try {
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MMM-yyyy");
-                    LocalDate.parse(dateJoined, formatter);
-                } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(null, "Invalid date format! Please use dd-MMM-yyyy " +
-                            "(Example: 01-Jan-2023)");
                     return;
                 }
 
