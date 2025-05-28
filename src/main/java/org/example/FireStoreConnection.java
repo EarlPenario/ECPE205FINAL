@@ -21,7 +21,7 @@ public class FireStoreConnection {
     public FireStoreConnection() {
         db = null;
         try {
-            FileInputStream serviceAccount = new FileInputStream("src/main/java/org/example/ecpe205final-firebase-adminsdk-fbsvc-2e06f547cb.json");
+            FileInputStream serviceAccount = new FileInputStream("src/main/java/org/example/ecpe205final-firebase-adminsdk-fbsvc-4b3189e452.json");
             FirebaseOptions options = new FirebaseOptions.Builder().
                     setCredentials(GoogleCredentials.fromStream(serviceAccount)).
                     setDatabaseUrl("https://ecpe205final-default-rtdb.asia-southeast1.firebasedatabase.app/")
